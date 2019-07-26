@@ -46,31 +46,11 @@
       </el-tooltip>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-<!--      <el-divider></el-divider>-->
       <hr class="divider" />
-      <div class="tips">
-        © 2019 Jesus All Right Reserved.
-      </div>
+      <div class="tips">© 2019 Jesus All Right Reserved.</div>
       <span class="third-party"> 第三方登录</span>
       <social-sign />
-
-<!--      <div style="position:relative">-->
-<!--        <div class="tips">-->
-<!--          <el-button class="thirdparty-button" type="info" @click="showDialog=true">-->
-<!--            第三方登录-->
-<!--          </el-button>-->
-<!--        </div>-->
-<!--      </div>-->
     </el-form>
-
-    <el-dialog title="第三方登录" :visible.sync="showDialog">
-
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
