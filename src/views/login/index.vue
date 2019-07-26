@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
+    <el-form ref="loginForm" :model="login" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">Jesus Management System</h3>
       </div>
 
       <el-form-item prop="username">
@@ -12,12 +12,12 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
+          v-model="login.username"
+          placeholder="用户名"
           name="username"
           type="text"
           tabindex="1"
-          autocomplete="on"
+          autocomplete="off"
         />
       </el-form-item>
 
@@ -29,9 +29,9 @@
           <el-input
             :key="passwordType"
             ref="password"
-            v-model="loginForm.password"
+            v-model="login.password"
             :type="passwordType"
-            placeholder="Password"
+            placeholder="密   码"
             name="password"
             tabindex="2"
             autocomplete="on"
@@ -47,24 +47,25 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
+<!--      <el-divider></el-divider>-->
+      <hr class="divider" />
+      <div class="tips">
+        © 2019 Jesus All Right Reserved.
       </div>
+      <span class="third-party"> 第三方登录</span>
+      <social-sign />
+
+<!--      <div style="position:relative">-->
+<!--        <div class="tips">-->
+<!--          <el-button class="thirdparty-button" type="info" @click="showDialog=true">-->
+<!--            第三方登录-->
+<!--          </el-button>-->
+<!--        </div>-->
+<!--      </div>-->
     </el-form>
 
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
+    <el-dialog title="第三方登录" :visible.sync="showDialog">
+
       <br>
       <br>
       <br>
@@ -74,7 +75,7 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+import { isEmpty } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 
 export default {
@@ -82,23 +83,23 @@ export default {
   components: { SocialSign },
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+      if (isEmpty(value)) {
+        callback(new Error('请输入用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (isEmpty(value)) {
+        callback(new Error('请输入密码'))
       } else {
         callback()
       }
     }
     return {
-      loginForm: {
-        username: 'admin',
-        password: '111111'
+      login: {
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -128,9 +129,9 @@ export default {
     // window.addEventListener('storage', this.afterQRScan)
   },
   mounted() {
-    if (this.loginForm.username === '') {
+    if (isEmpty(this.login.username)) {
       this.$refs.username.focus()
-    } else if (this.loginForm.password === '') {
+    } else if (isEmpty(this.login.password)) {
       this.$refs.password.focus()
     }
   },
@@ -164,7 +165,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store.dispatch('user/login', this.login)
             .then(() => {
               this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
               this.loading = false
@@ -263,7 +264,8 @@ $light_gray:#eee;
 .login-container {
   min-height: 100%;
   width: 100%;
-  background: url("../../assets/images/login_bg.png");
+  background: #f0f2f5 url("../../assets/images/login_bg.png") no-repeat no-repeat;
+  background-size: cover;
   //background-color: $bg;
   overflow: hidden;
 
@@ -278,9 +280,9 @@ $light_gray:#eee;
 
   .tips {
     font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
-
+    color: #949496;
+    margin-bottom: 20px;
+    font-family: Consolas;
     span {
       &:first-of-type {
         margin-right: 16px;
@@ -321,7 +323,17 @@ $light_gray:#eee;
   .thirdparty-button {
     position: absolute;
     right: 0;
-    bottom: 6px;
+    bottom: 0;
+  }
+
+  .divider{
+    color: #5c5c5c;
+  }
+
+  .third-party{
+    font-size: 12px;
+    color: white;
+    font-family: "微软雅黑";
   }
 
   @media only screen and (max-width: 470px) {

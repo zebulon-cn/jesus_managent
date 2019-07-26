@@ -85,3 +85,11 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
+export function isEmpty (str) {
+  str = str.trim();
+  if(str == null || str === '' || str === undefined){
+    return true;
+  }
+  return false;
+}
