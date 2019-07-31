@@ -124,6 +124,7 @@ const actions = {
 }
 
 export default {
+  //命名空间,在使用时要引用   调用方式:  文件名/方法
   namespaced: true,
   state,
   mutations,

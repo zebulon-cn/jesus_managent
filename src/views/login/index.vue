@@ -46,16 +46,14 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登 录</el-button>
-      <div class="is-remember">
+      <div :class="login.rememberMe ? 'is-remember' : 'is-not-remember'">
         <el-switch
           v-model="login.rememberMe"
-          active-color="#13ce66"
-          inactive-color="#8c8c8c">
+          active-text="记住我">
         </el-switch>
-        <span class="remember">记住我</span>
       </div>
 
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登 录</el-button>
       <hr class="divider"/>
       <div class="tips">© 2019 Jesus All Right Reserved.</div>
       <span class="third-party"> 其他登录方式</span>
@@ -155,7 +153,6 @@
       handleLogin () {
         this.$refs.login.validate(valid => {
           if (valid) {
-            console.log(this.login);
             this.loading = true
             this.$store.dispatch('user/login', this.login)
               .then(() => {
@@ -333,10 +330,19 @@
     .remember{
       font-family: 微软雅黑;
       font-size: 13.5px;
-      color: white;
+      color: #EBEEF5;
+    }
+    .is-not-remember,.is-remember{
+      padding:10px 5px;
+      margin-bottom: 20px;
+      border-radius: 3px;
+    }
+
+    .is-not-remember{
+      background-color: rgba(220,223,230,0.1);
     }
     .is-remember{
-      margin: 0 0 20px 0;
+      background-color: rgba(48,49,51,0.3);
     }
 
     @media only screen and (max-width: 470px) {

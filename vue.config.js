@@ -34,7 +34,7 @@ module.exports = {
 
   //后台配置
   devServer: {
-    // port: port,
+    port: port,
     // open: true,
     // overlay: {
     //   warnings: false,
@@ -56,16 +56,7 @@ module.exports = {
     // after: require('./mock/mock-server.js')
 
     open: false,
-    // proxy: 'http://127.0.0.1:80/',
-    proxy: {
-      [process.env.VUE_APP_BASE_API]: {
-        target: `http://127.0.0.1:80/`,
-        changeOrigin: true,
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
-        }
-      }
-    }
+    proxy: 'http://127.0.0.1:80/'
   },
 
   configureWebpack: {
