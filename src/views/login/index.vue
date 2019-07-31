@@ -46,6 +46,7 @@
         </el-form-item>
       </el-tooltip>
 
+<!--      <el-checkbox class="is-not-remember" v-model="login.rememberMe">记住我</el-checkbox>-->
       <div :class="login.rememberMe ? 'is-remember' : 'is-not-remember'">
         <el-switch
           v-model="login.rememberMe"
@@ -334,7 +335,7 @@
     }
     .is-not-remember,.is-remember{
       padding:10px 5px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       border-radius: 3px;
     }
 
