@@ -14,7 +14,7 @@ const name = defaultSettings.title || 'Jesus 后台' // page title
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 // You can change the port by the following method:
-// port = 9527 npm run dev OR npm run dev --port = 9527
+// port = 9588 npm run dev OR npm run dev --port = 9588
 const port = process.env.port || process.env.npm_config_port || 9588 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
@@ -34,13 +34,14 @@ module.exports = {
 
   //后台配置
   devServer: {
-    port: port,
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
-    //mock 代理 测试
+    // port: port,
+    // open: true,
+    // overlay: {
+    //   warnings: false,
+    //   errors: true
+    // },
+
+    //接口代理
     // proxy: {
     //   // change xxx-api/login => mock/login
     //   // detail: https://cli.vuejs.org/config/#devserver-proxy
@@ -53,6 +54,18 @@ module.exports = {
     //   }
     // },
     // after: require('./mock/mock-server.js')
+
+    open: false,
+    // proxy: 'http://127.0.0.1:80/',
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://127.0.0.1:80/`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    }
   },
 
   configureWebpack: {
