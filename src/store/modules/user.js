@@ -33,10 +33,9 @@ const actions = {
   login ({ commit }, user) {
     return new Promise((resolve, reject) => {
       login(user).then(response => {
-        console.log(response)
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data.username)
+        setToken(data.username)
         resolve()
       }).catch(error => {
         reject(error)
@@ -51,18 +50,18 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('未找到该用户信息，请刷新重试或者重新登录.')
         }
 
-        const { roles, name, avatar, introduction } = data
+        const { username, roleId, avatar, introduction } = data
 
         // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+        if (!roleId) {
+          reject('抱歉 , 您的身份待核验!')
         }
 
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
+        commit('SET_ROLES', roleId)
+        commit('SET_NAME', username)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
         resolve(data)

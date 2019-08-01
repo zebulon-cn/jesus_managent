@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'Jesus 后台' // page title
+const name = defaultSettings.title || 'Jesus backstage' // page title
 
 // 在vue启动时，如果本文件存在，vue会自动加载
 
@@ -56,7 +56,7 @@ module.exports = {
     // after: require('./mock/mock-server.js')
 
     open: false,
-    proxy: 'http://127.0.0.1:80/'
+    proxy: 'http://127.0.0.1:8001/'
   },
 
   configureWebpack: {
