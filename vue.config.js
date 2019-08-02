@@ -17,6 +17,9 @@ const name = defaultSettings.title || 'Jesus backstage' // page title
 // port = 9588 npm run dev OR npm run dev --port = 9588
 const port = process.env.port || process.env.npm_config_port || 9588 // dev port
 
+//dev 地址
+const devPath = 'http://127.0.0.1:8001/';
+
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -56,7 +59,7 @@ module.exports = {
     // after: require('./mock/mock-server.js')
 
     open: false,
-    proxy: 'http://127.0.0.1:8001/'
+    proxy: devPath
   },
 
   configureWebpack: {

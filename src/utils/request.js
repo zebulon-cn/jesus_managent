@@ -14,8 +14,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
-    console.log(store.getters.token)
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -50,11 +48,6 @@ service.interceptors.response.use(
 
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== '20000') {
-      // Message({
-      //   message: res.message || 'Error',
-      //   type: 'error',
-      //   duration: 5 * 1000
-      // })
 
       //请求失败
       if(res.code === '40500'){
@@ -74,10 +67,19 @@ service.interceptors.response.use(
         })
       }
 
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === '40013' || res.code === '40000') {
+      //cookie 过期
+      if(res.code === '40013'){
+        MessageBox.alert( res.data,'系统提示').then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
+        })
+      }
+
+      // 未知异常;
+      if (res.code === '40000') {
         // to re-login
-        MessageBox.confirm('登录信息已过期 , 您可以取消留在此页或者重新登录', '确认注销', {
+        MessageBox.confirm('您已登出 , 您可以取消留在此页或者重新登录', '系统提示', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'

@@ -34,7 +34,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login(user).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.username)
+        // commit('SET_TOKEN', data.username)
         setToken(data.username)
         resolve()
       }).catch(error => {
@@ -44,9 +44,9 @@ const actions = {
   },
 
   // get user info
-  getInfo({ commit, state }) {
+  getInfo({ commit }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
         const { data } = response
 
         if (!data) {

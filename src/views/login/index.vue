@@ -46,19 +46,17 @@
         </el-form-item>
       </el-tooltip>
 
-<!--      <el-checkbox class="is-not-remember" v-model="login.rememberMe">记住我</el-checkbox>-->
-      <div :class="login.rememberMe ? 'is-remember' : 'is-not-remember'">
-        <el-switch
-          v-model="login.rememberMe"
-          active-text="记住我">
-        </el-switch>
-      </div>
+      <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">登 录</el-button>
+      <el-checkbox class="remember-me" v-model="login.rememberMe" >记住我</el-checkbox>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登 录</el-button>
-      <hr class="divider"/>
+      <el-divider></el-divider>
       <div class="tips">© 2019 Jesus All Right Reserved.</div>
-      <span class="third-party"> 其他登录方式</span>
-      <social-sign/>
+
+      <a class="third-party"  @click="showDialog=true"> 其他登录方式</a>
+      <el-dialog title="第三方登录" :visible.sync="showDialog">
+        <span style="font-size: 16px;padding-left: 15px;">选择您的登录方式</span>
+        <social-sign />
+      </el-dialog>
     </el-form>
   </div>
 </template>
@@ -222,9 +220,9 @@
 
       input {
         background: transparent;
-        border: 0px;
+        border: 0;
         -webkit-appearance: none;
-        border-radius: 0px;
+        border-radius: 0;
         padding: 12px 5px 12px 15px;
         color: $light_gray;
         height: 47px;
@@ -333,17 +331,11 @@
       font-size: 13.5px;
       color: #EBEEF5;
     }
-    .is-not-remember,.is-remember{
-      padding:10px 5px;
-      margin-bottom: 10px;
-      border-radius: 3px;
-    }
 
-    .is-not-remember{
-      background-color: rgba(220,223,230,0.1);
-    }
-    .is-remember{
-      background-color: rgba(48,49,51,0.3);
+    .remember-me {
+      margin: 10px 5px;
+      border-radius: 3px;
+      color: white;
     }
 
     @media only screen and (max-width: 470px) {
